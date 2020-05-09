@@ -1,0 +1,146 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+* {
+    font-family: 'Righteous', cursive;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-size: xx-large;
+}
+
+.navbar {
+    padding: 0px !important;
+    background-color: #8E00BF !important;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+    border-color: #8E00BF !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+    border-color: #8E00BF !important;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: #2B2B2B;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.nav-link {
+    color: black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #B1B1B1;
+}
+
+p {
+    color: #B1B1B1;
+}
+
+.btn-dark {
+    background-color: #646464 !important;
+    color: black;
+}
+
+.search {
+    
+    margin-top: 50px;
+    align-items: center;
+}
+
+input {
+    border-color: #646464 !important;
+    color: #C4C4C4;
+}
+
+.category-title {
+    margin-top: 50px;
+}
+
+.card-title {
+    color: black;
+}
+
+.card-group {
+    margin-bottom: 50px;
+}
+
+.card {
+    background-color: #646464;
+}
+
+.page-title {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+label {
+    color: #B1B1B1;
+}
+
+.btn-primary {
+    background-color: #8E00BF;
+    color: black;
+    border-color: black !important;
+}

@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Adicionar Quadrinho";
+}
+@model AddComicViewModel;
+
+<h2 class="text-center page-title">Adicionar Quadrinho</h2>
+
+
+<form asp-controller="admin" asp-action="addcomic" method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="titulo">Título</label>
+                <input type="text" asp-for="@Model.Comic.Title" class="form-control" id="titulo" placeholder="Titulo">
+                <span asp-validation-for="@Model.Comic.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Data de Publicação</label>
+                <input asp-for="@Model.Comic.Date" class="form-control" type="date" id="date">
+                <span asp-validation-for="@Model.Comic.Date" class="text-danger"></span>
+            </div>
+
+            <div id="add-select-category">
+                <div class="form-group" id="select-category">
+                    <label for="category">Categoria(s)</label><br>
+                    <select asp-items="@Model.Categories" asp-for="@Model.SelectedCategories" title="Selecione" data-live-search="true" class="selectpicker" id="category" multiple>
+                    </select>
+                    <button type="button" class="btn btn-dark btn-secondary" onclick="categoryManager.onShowAddCategoryClick()">Add</button>
+                    <span asp-validation-for="@Model.Categories" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" id="add-category" style="display: none">
+                    <label for="author-name-input">Adcicionar Categoria</label><br>
+                    <div class="input-group mb-3">
+                        <input type="text" id="category-name-input" class="form-control" placeholder="Name da Categoria">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onClickAddCategory()" type="button">Add</button>
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onHideAddCategoryClick()" type="button">Cancelar</button>
+                        </div>
+                    </div>
+                    <span id="error-span-category" class="text-danger" style="display: none"></span>
+                </div>
+            </div>
+
+            <div id="add-select-category">
+                <div class="form-group" id="select-category">
+                    <label for="category">Categoria(s)</label><br>
+                    <select asp-items="@Model.Categories" asp-for="@Model.SelectedCategories" title="Selecione" data-live-search="true" class="selectpicker" id="category" multiple>
+                    </select>
+                    <button type="button" class="btn btn-dark btn-secondary" onclick="categoryManager.onShowAddCategoryClick()">Add</button>
+                    <span asp-validation-for="@Model.Categories" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" id="add-category" style="display: none">
+                    <label for="author-name-input">Adcicionar Categoria</label><br>
+                    <div class="input-group mb-3">
+                        <input type="text" id="category-name-input" class="form-control" placeholder="Name da Categoria">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onClickAddCategory()" type="button">Add</button>
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onHideAddCategoryClick()" type="button">Cancelar</button>
+                        </div>
+                    </div>
+                    <span id="error-span-category" class="text-danger" style="display: none"></span>
+                </div>
+            </div>
+
+            <div id="add-select-category">
+                <div class="form-group" id="select-category">
+                    <label for="category">Categoria(s)</label><br>
+                    <select asp-items="@Model.Categories" asp-for="@Model.SelectedCategories" title="Selecione" data-live-search="true" class="selectpicker" id="category" multiple>
+                    </select>
+                    <button type="button" class="btn btn-dark btn-secondary" onclick="categoryManager.onShowAddCategoryClick()">Add</button>
+                    <span asp-validation-for="@Model.Categories" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" id="add-category" style="display: none">
+                    <label for="author-name-input">Adcicionar Categoria</label><br>
+                    <div class="input-group mb-3">
+                        <input type="text" id="category-name-input" class="form-control" placeholder="Name da Categoria">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onClickAddCategory()" type="button">Add</button>
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onHideAddCategoryClick()" type="button">Cancelar</button>
+                        </div>
+                    </div>
+                    <span id="error-span-category" class="text-danger" style="display: none"></span>
+                </div>
+            </div>
+
+            <div id="add-select-category">
+                <div class="form-group" id="select-category">
+                    <label for="category">Categoria(s)</label><br>
+                    <select asp-items="@Model.Categories" asp-for="@Model.SelectedCategories" title="Selecione" data-live-search="true" class="selectpicker" id="category" multiple>
+                    </select>
+                    <button type="button" class="btn btn-dark btn-secondary" onclick="categoryManager.onShowAddCategoryClick()">Add</button>
+                    <span asp-validation-for="@Model.Categories" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" id="add-category" style="display: none">
+                    <label for="author-name-input">Adcicionar Categoria</label><br>
+                    <div class="input-group mb-3">
+                        <input type="text" id="category-name-input" class="form-control" placeholder="Name da Categoria">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onClickAddCategory()" type="button">Add</button>
+                            <button class="btn btn-dark btn-secondary" onclick="categoryManager.onHideAddCategoryClick()" type="button">Cancelar</button>
+                        </div>
+                    </div>
+                    <span id="error-span-category" class="text-danger" style="display: none"></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="description">Descrição</label>
+                <textarea type="text" class="form-control" id="description" rows="15" placeholder="Descrição"></textarea>
+                <span class="text-danger"></span>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Adicionar Quadrinho</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script src="~/js/AddComic/addCategory.js"></script>
+    <script src="~/js/AddManga/addAuthor.js"></script>
+    <script src="~/js/AddManga/addDesigner.js"></script>
+    <script src="~/js/AddManga/addComic.js"></script>
+    <script src="~/js/AddManga/addGenre.js"></script>
+    <script src="~/js/AddManga/addEditora.js"></script>
+}
