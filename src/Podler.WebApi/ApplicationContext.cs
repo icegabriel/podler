@@ -15,8 +15,8 @@ namespace Podler.WebApi
         public DbSet<Author> Authors { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CoverImage> CoverImages { get; set; }
-        public DbSet<PageImage> PageImages { get; set; }
+        public DbSet<Cover> Covers { get; set; }
+        public DbSet<Page> Pages { get; set; }
 
         public ApplicationContext(DbContextOptions options) : base(options)
         {
@@ -29,22 +29,22 @@ namespace Podler.WebApi
             modelBuilder.Entity<Comic>().HasKey(c => c.Id);
             modelBuilder.Entity<Comic>().HasOne(c => c.Publisher).WithMany(p => p.Comics);
             modelBuilder.Entity<Comic>().HasMany(c => c.Chapters).WithOne(c => c.Comic);
-            modelBuilder.Entity<Comic>().HasOne(c => c.CoverImage)
+            modelBuilder.Entity<Comic>().HasOne(c => c.Cover)
                                         .WithOne(c => c.Comic)
-                                        .HasForeignKey<CoverImage>(c => c.ComicId);
+                                        .HasForeignKey<Cover>(c => c.ComicId);
 
             modelBuilder.Entity<Chapter>().HasKey(c => c.Id);
             modelBuilder.Entity<Chapter>().HasOne(c => c.Comic);
-            modelBuilder.Entity<Chapter>().HasMany(c => c.PageImages).WithOne(p => p.Chapter);
+            modelBuilder.Entity<Chapter>().HasMany(c => c.Pages).WithOne(p => p.Chapter);
 
             modelBuilder.Entity<Publisher>().HasKey(p => p.Id);
             modelBuilder.Entity<Publisher>().HasMany(p => p.Comics);
 
-            modelBuilder.Entity<CoverImage>().HasKey(c => c.Id);
-            modelBuilder.Entity<CoverImage>().HasOne(c => c.Comic);
+            modelBuilder.Entity<Cover>().HasKey(c => c.Id);
+            modelBuilder.Entity<Cover>().HasOne(c => c.Comic);
 
-            modelBuilder.Entity<PageImage>().HasKey(p => p.Id);
-            modelBuilder.Entity<PageImage>().HasOne(p => p.Chapter);
+            modelBuilder.Entity<Page>().HasKey(p => p.Id);
+            modelBuilder.Entity<Page>().HasOne(p => p.Chapter);
 
             #region Many To Many Relationships
 

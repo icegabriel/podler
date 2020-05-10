@@ -25,7 +25,7 @@ namespace Podler.WebApi.Repositories
 
         public async Task<byte[]> GetCoverAsync(int id)
         {
-            var cover = await _context.Set<CoverImage>().Where(c => c.ComicId == id).SingleOrDefaultAsync();
+            var cover = await _context.Set<Cover>().Where(c => c.ComicId == id).SingleOrDefaultAsync();
 
             return cover?.Image;
         }

@@ -18,10 +18,12 @@ namespace Podler.Services
         private const string RELATIVE_CATEGORIES_URI = "api/categories";
         private const string RELATIVE_AUTHORS_URI = "api/authors";
         private const string RELATIVE_DESIGNERS_URI = "api/designers";
+        private const string RELATIVE_PUBLISHERS_URI = "api/publishers";
 
         private readonly Uri _categoriesUri;
         private readonly Uri _authorsUri;
         private readonly Uri _designersUri;
+        private readonly Uri _publishersUri;
 
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
@@ -36,6 +38,7 @@ namespace Podler.Services
             _categoriesUri = new Uri(baseUri, RELATIVE_CATEGORIES_URI);
             _authorsUri = new Uri(baseUri, RELATIVE_AUTHORS_URI);
             _designersUri = new Uri(baseUri, RELATIVE_DESIGNERS_URI);
+            _publishersUri = new Uri(baseUri, RELATIVE_PUBLISHERS_URI);
         }
 
         public async Task<List<T>> GetModelListAsync<T>(Uri uri) where T : BaseModel
@@ -98,6 +101,14 @@ namespace Podler.Services
                                             "Esse desenhista ja existe.");
         }
 
+        public async Task<SelectAddResponse> AddPublisher(Publisher publisher)
+        {
+            return await PostSelectableItem(publisher,
+                                            _publishersUri,
+                                            "Editora adicionada com sucesso.",
+                                            "Essa editora ja existe.");
+        }
+
         public async Task<List<Author>> GetAuthorsAsync()
         {
             return await GetModelListAsync<Author>(_authorsUri);
@@ -112,6 +123,11 @@ namespace Podler.Services
         {
             return await GetModelListAsync<Designer>(_designersUri);
         }
+
+        public async Task<List<Publisher>> GetPublishersAsync()
+        {
+            return await GetModelListAsync<Publisher>(_publishersUri);
+        }
     }
 
     public interface IPodlerApiService
@@ -119,8 +135,10 @@ namespace Podler.Services
         Task<SelectAddResponse> AddAuthor(Author author);
         Task<SelectAddResponse> AddCategory(Category category);
         Task<SelectAddResponse> AddDesigner(Designer designer);
+        Task<SelectAddResponse> AddPublisher(Publisher publisher);
         Task<List<Category>> GetCategoriesAsync();
         Task<List<Author>> GetAuthorsAsync();
         Task<List<Designer>> GetDesignersAsync();
+        Task<List<Publisher>> GetPublishersAsync();
     }
 }

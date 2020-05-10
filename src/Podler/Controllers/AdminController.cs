@@ -27,7 +27,7 @@ namespace Podler.Views
         {
             var categories = await _podlerApiService.GetCategoriesAsync();
             var designers = await _podlerApiService.GetDesignersAsync();
-            var publishers = new List<Publisher>();
+            var publishers = await _podlerApiService.GetPublishersAsync();
             var authors = await _podlerApiService.GetAuthorsAsync();
 
             var viewModel = new AddComicViewModel(categories, authors, designers, publishers);
@@ -39,6 +39,11 @@ namespace Podler.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddComic(AddComicViewModel addComicViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
 
@@ -76,6 +81,18 @@ namespace Podler.Views
             }
 
             return await _podlerApiService.AddDesigner(designer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<SelectAddResponse> AddPublisher([FromBody] Publisher publisher)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new SelectAddResponse(false, "Editora invalida.");
+            }
+
+            return await _podlerApiService.AddPublisher(publisher);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

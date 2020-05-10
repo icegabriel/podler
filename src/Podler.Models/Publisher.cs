@@ -13,6 +13,7 @@ namespace Podler.Models
         [StringLength(40, ErrorMessage = "O campo {0} precisa ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 1)]
         public string Name { get; set; }
 
+        [DataMember]
         public List<Comic> Comics { get; set; }
 
         public Publisher()

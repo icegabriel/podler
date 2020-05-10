@@ -27,7 +27,8 @@
                     <select asp-items="@Model.Categories" asp-for="@Model.SelectedCategories" id="category" title="Selecione" data-live-search="true" class="selectpicker" multiple>
                     </select>
                     <button type="button" class="btn btn-dark btn-secondary" onclick="categoryManager.onShowAddClick()">Add</button>
-                    <span asp-validation-for="@Model.Categories" class="text-danger"></span>
+                    <br />
+                    <span asp-validation-for="@Model.SelectedCategories" class="text-danger"></span>
                 </div>
 
                 <div class="form-group" id="add-div-category" style="display: none">
@@ -49,7 +50,8 @@
                     <select asp-items="@Model.Authors" asp-for="@Model.SelectedAuthors" id="author" title="Selecione" data-live-search="true" class="selectpicker" multiple>
                     </select>
                     <button type="button" class="btn btn-dark btn-secondary" onclick="authorManager.onShowAddClick()">Add</button>
-                    <span asp-validation-for="@Model.Authors" class="text-danger"></span>
+                    <br />
+                    <span asp-validation-for="@Model.SelectedAuthors" class="text-danger"></span>
                 </div>
 
                 <div class="form-group" id="add-div-author" style="display: none">
@@ -71,7 +73,8 @@
                     <select asp-items="@Model.Designers" asp-for="@Model.SelectedDesigners" id="designer" title="Selecione" data-live-search="true" class="selectpicker" multiple>
                     </select>
                     <button type="button" class="btn btn-dark btn-secondary" onclick="designerManager.onShowAddClick()">Add</button>
-                    <span asp-validation-for="@Model.Designers" class="text-danger"></span>
+                    <br />
+                    <span asp-validation-for="@Model.SelectedDesigners" class="text-danger"></span>
                 </div>
 
                 <div class="form-group" id="add-div-designer" style="display: none">
@@ -87,16 +90,52 @@
                 </div>
             </div>
 
+            <div id="add-select-publisher">
+                <div class="form-group" id="select-div-publisher">
+                    <label for="publisher">Editora</label><br>
+                    <select asp-items="@Model.Publishers" asp-for="@Model.SelectedPublisher" id="publisher" title="Selecione" data-live-search="true" class="selectpicker">
+                    </select>
+                    <button type="button" class="btn btn-dark btn-secondary" onclick="publisherManager.onShowAddClick()">Add</button>
+                    <br />
+                    <span asp-validation-for="@Model.SelectedPublisher" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" id="add-div-publisher" style="display: none">
+                    <label for="publisher-name-input">Adicionar Editora</label><br>
+                    <div class="input-group mb-3">
+                        <input type="text" id="publisher-name-input" class="form-control" placeholder="Nome da Editora">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-secondary" onclick="publisherManager.onClickAdd()" type="button">Add</button>
+                            <button class="btn btn-dark btn-secondary" onclick="publisherManager.onHideAddClick()" type="button">Cancelar</button>
+                        </div>
+                    </div>
+                    <span id="error-span-publisher" class="text-danger" style="display: none"></span>
+                </div>
+            </div>
         </div>
+
         <div class="col">
             <div class="form-group">
+                <label for="status">Status</label><br>
+                <select asp-for="@Model.Comic.Status" id="status" title="Selecione" class="selectpicker">
+                    <option value="1">Em andamento</option>
+                    <option value="2">Terminado</option>
+                    <option value="3">Cancelado</option>
+                    <option value="4">Pausado</option>
+                </select>
+                <br />
+                <span asp-validation-for="@Model.Comic.Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label for="description">Descrição</label>
-                <textarea type="text" class="form-control" id="description" rows="15" placeholder="Descrição"></textarea>
-                <span class="text-danger"></span>
+                <textarea type="text" asp-for="@Model.Comic.Description" class="form-control" id="description" rows="15" placeholder="Descrição"></textarea>
+                <span asp-validation-for="@Model.Comic.Description" class="text-danger"></span>
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Adicionar Quadrinho</button>
         </div>
+
     </div>
 </form>
 

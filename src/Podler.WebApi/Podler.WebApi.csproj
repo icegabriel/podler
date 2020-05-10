@@ -14,6 +14,8 @@
   <ItemGroup>
     <Compile Include="Migrations\20200508220847_Initial.cs" />
     <Compile Include="Migrations\20200508220847_Initial.Designer.cs" />
+    <Compile Include="Migrations\20200510054530_ComicsImages.cs" />
+    <Compile Include="Migrations\20200510054530_ComicsImages.Designer.cs" />
     <Compile Include="Migrations\ApplicationContextModelSnapshot.cs" />
   </ItemGroup>
 

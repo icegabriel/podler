@@ -62,7 +62,7 @@ namespace Podler.Models
     {
         [DataMember]
         //[Required(ErrorMessage = "A imagem de capa e obrigatória")]
-        public CoverImage CoverImage { get; set; }
+        public Cover Cover { get; set; }
 
         [DataMember]
         public decimal Score { get; set; }
@@ -86,7 +86,7 @@ namespace Podler.Models
     public class ComicApi : ComicBase
     {
         [Required(ErrorMessage = "A imagem de capa e obrigatória")]
-        public string CoverImage { get; set; }
+        public string Cover { get; set; }
 
         public decimal Score { get; set; }
 
@@ -117,21 +117,15 @@ namespace Podler.Models
             Rank = comic.Rank;
             NumberChapters = comic.NumberChapters;
             Chapters = comic.Chapters;
-            CoverImage = $"/api/comics/{Id}/cover";
+            Cover = $"/api/comics/{Id}/cover";
         }
-    }
-
-    public class ComicUpload : ComicBase
-    {
-        [Required(ErrorMessage = "A imagem de capa e obrigatória")]
-        public IFormFile CoverImage { get; set; }
     }
 
     public enum ComicStatus
     {
-        OnGoing = 0,
-        Finished = 1,
-        Canceled = 2,
-        Paused = 3
+        OnGoing = 1,
+        Finished = 2,
+        Canceled = 3,
+        Paused = 4
     }
 }

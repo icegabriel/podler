@@ -13,11 +13,6 @@ namespace Podler.WebApi.Repositories
         {
         }
 
-        public async override Task<Category> GetAsync(int id)
-        {
-            return await DbSet.Where(c => c.Id == id).SingleOrDefaultAsync();
-        }
-
         public async Task<Category> GetCategoryByNameAsync(string name)
         {
             return await DbSet.Where(c => c.Name.ToLower() == name.ToLower())

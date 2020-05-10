@@ -34,6 +34,7 @@ namespace Podler.WebApi
             services.AddTransient<ICategoriesRepository, CategoriesRepository>();
             services.AddTransient<IAuthorsRepository, AuthorsRepository>();
             services.AddTransient<IDesignersRepository, DesignersRepository>();
+            services.AddTransient<IPublishersRepository, PublishersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

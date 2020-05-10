@@ -15,16 +15,16 @@ namespace Podler.ViewModels
         public Comic Comic { get; set; }
 
         [Required(ErrorMessage = "O autor é obrigatório")]
-        public List<string> SelectedAuthors { get; set; }
+        public List<int> SelectedAuthors { get; set; }
 
         [Required(ErrorMessage = "A categoria e obrigatória")]
-        public List<string> SelectedCategories { get; set; }
+        public List<int> SelectedCategories { get; set; }
 
         [Required(ErrorMessage = "O desenhista é obrigatório")]
-        public List<string> SelectedDesigners { get; set; }
+        public List<int> SelectedDesigners { get; set; }
 
         [Required(ErrorMessage = "A editora e obrigatória")]
-        public string SelectedPublisher { get; set; }
+        public int SelectedPublisher { get; set; }
 
         [Required(ErrorMessage = "A imagem de capa e obrigatória")]
         public IFormFile CoverImage { get; set; }

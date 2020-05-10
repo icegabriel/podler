@@ -120,3 +120,10 @@ var designerManager = new SelectAddManager('/admin/adddesigner',
     '#add-div-designer',
     '#designer-name-input',
     '#error-span-designer');
+
+var publisherManager = new SelectAddManager('/admin/addpublisher',
+    '#add-select-publisher',
+    '#select-div-publisher',
+    '#add-div-publisher',
+    '#publisher-name-input',
+    '#error-span-publisher');
