@@ -13,9 +13,9 @@ namespace Podler.WebApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoriesRepository _categoryRepository;
 
-        public CategoriesController(ICategoryRepository categoryRepository)
+        public CategoriesController(ICategoriesRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
@@ -63,7 +63,7 @@ namespace Podler.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutComic([FromBody] Category category)
+        public async Task<IActionResult> PutCategory([FromBody] Category category)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace Podler.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComic(int id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await _categoryRepository.GetAsync(id);
 

@@ -31,7 +31,9 @@ namespace Podler.WebApi
             services.AddDbContext<ApplicationContext>(options => options.UseSqlite(connectionString));
 
             services.AddTransient<IComicsRepository, ComicsRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICategoriesRepository, CategoriesRepository>();
+            services.AddTransient<IAuthorsRepository, AuthorsRepository>();
+            services.AddTransient<IDesignersRepository, DesignersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

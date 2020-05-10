@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Podler.Models;
+using Podler.Models.Interfaces;
 using Podler.Responses;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,13 @@ namespace Podler.Services
 {
     public class PodlerApiService : IPodlerApiService
     {
-        private const string RELATIVE_CATEGORY_URI = "api/categories";
+        private const string RELATIVE_CATEGORIES_URI = "api/categories";
+        private const string RELATIVE_AUTHORS_URI = "api/authors";
+        private const string RELATIVE_DESIGNERS_URI = "api/designers";
 
-        private readonly Uri _categoryUri;
+        private readonly Uri _categoriesUri;
+        private readonly Uri _authorsUri;
+        private readonly Uri _designersUri;
 
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
@@ -26,50 +31,96 @@ namespace Podler.Services
             _httpClient = httpClient;
             _configuration = configuration;
 
-            var baseCategoryUri = new Uri(_configuration["DependencesServicesUrl:PodlerApi"]);
-            _categoryUri = new Uri(baseCategoryUri, RELATIVE_CATEGORY_URI);
+            var baseUri = new Uri(_configuration["DependencesServicesUrl:PodlerApi"]);
+
+            _categoriesUri = new Uri(baseUri, RELATIVE_CATEGORIES_URI);
+            _authorsUri = new Uri(baseUri, RELATIVE_AUTHORS_URI);
+            _designersUri = new Uri(baseUri, RELATIVE_DESIGNERS_URI);
         }
 
-        public async Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<T>> GetModelListAsync<T>(Uri uri) where T : BaseModel
         {
-            var httpResponseMessage = await _httpClient.GetAsync(_categoryUri);
+            var httpResponseMessage = await _httpClient.GetAsync(uri);
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var json = await httpResponseMessage.Content.ReadAsStringAsync();
-                var categories = JsonConvert.DeserializeObject<List<Category>>(json);
+                var model = JsonConvert.DeserializeObject<List<T>>(json);
 
-                return categories;
+                return model;
             }
 
             return null;
         }
 
-        public async Task<AddCategoryResponse> AddCategory(Category category)
+        public async Task<SelectAddResponse> PostSelectableItem<T>(T model, Uri uri, string successMessage, string existErrorMessage) where T : ISelectableItem
         {
-            var json = JsonConvert.SerializeObject(category);
+            var json = JsonConvert.SerializeObject(model);
 
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var httpResponseMessage = await _httpClient.PostAsync(_categoryUri, httpContent);
+            var httpResponseMessage = await _httpClient.PostAsync(uri, httpContent);
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
-                var categoryDbJson = await httpResponseMessage.Content.ReadAsStringAsync();
-                var categoryDb = JsonConvert.DeserializeObject<Category>(categoryDbJson);
+                var modelDbJson = await httpResponseMessage.Content.ReadAsStringAsync();
+                var modelDb = JsonConvert.DeserializeObject<T>(modelDbJson);
 
-                return new AddCategoryResponse(true, "Categoria adicionada com sucesso.", categoryDb);
+                return new SelectAddResponse(true, successMessage, modelDb);
             }
             if (httpResponseMessage.StatusCode == HttpStatusCode.Conflict)
-                return new AddCategoryResponse(false, "Essa categoria ja existe.");
+                return new SelectAddResponse(false, existErrorMessage);
             else
-                return new AddCategoryResponse(false, "Error verifique os campos e tente novamente mais tarde.");
+                return new SelectAddResponse(false, "Error verifique os campos e tente novamente mais tarde.");
+        }
+
+        public async Task<SelectAddResponse> AddCategory(Category category)
+        {
+            return await PostSelectableItem(category,
+                                            _categoriesUri,
+                                            "Categoria adicionada com sucesso.",
+                                            "Essa categoria ja existe.");
+        }
+
+        public async Task<SelectAddResponse> AddAuthor(Author author)
+        {
+            return await PostSelectableItem(author,
+                                            _authorsUri,
+                                            "Autor adicionado com sucesso.",
+                                            "Esse author ja existe.");
+        }
+
+        public async Task<SelectAddResponse> AddDesigner(Designer designer)
+        {
+            return await PostSelectableItem(designer,
+                                            _designersUri,
+                                            "Desenhista adicionado com sucesso.",
+                                            "Esse desenhista ja existe.");
+        }
+
+        public async Task<List<Author>> GetAuthorsAsync()
+        {
+            return await GetModelListAsync<Author>(_authorsUri);
+        }
+
+        public async Task<List<Category>> GetCategoriesAsync()
+        {
+            return await GetModelListAsync<Category>(_categoriesUri);
+        }
+
+        public async Task<List<Designer>> GetDesignersAsync()
+        {
+            return await GetModelListAsync<Designer>(_designersUri);
         }
     }
 
     public interface IPodlerApiService
     {
-        Task<AddCategoryResponse> AddCategory(Category category);
+        Task<SelectAddResponse> AddAuthor(Author author);
+        Task<SelectAddResponse> AddCategory(Category category);
+        Task<SelectAddResponse> AddDesigner(Designer designer);
         Task<List<Category>> GetCategoriesAsync();
+        Task<List<Author>> GetAuthorsAsync();
+        Task<List<Designer>> GetDesignersAsync();
     }
 }

@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Podler.Models
 {
     [DataContract]
-    public class Category : BaseModel, ISelectListItem
+    public class Category : BaseModel, ISelectableItem
     {
         [DataMember]
         [Required(ErrorMessage = "O nome da categoria é obrigatório")]

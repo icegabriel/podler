@@ -24,7 +24,7 @@ namespace Podler.ViewModels
         public List<string> SelectedDesigners { get; set; }
 
         [Required(ErrorMessage = "A editora e obrigatória")]
-        public string SelectedPublishers { get; set; }
+        public string SelectedPublisher { get; set; }
 
         [Required(ErrorMessage = "A imagem de capa e obrigatória")]
         public IFormFile CoverImage { get; set; }
@@ -47,7 +47,7 @@ namespace Podler.ViewModels
             Publishers = GetSelectListItem(publishers);
         }
 
-        private IEnumerable<SelectListItem> GetSelectListItem<T>(IEnumerable<T> list) where T : ISelectListItem
+        private IEnumerable<SelectListItem> GetSelectListItem<T>(IEnumerable<T> list) where T : ISelectableItem
         {
             var selectListItem = new List<SelectListItem>();
 

@@ -57,6 +57,7 @@ namespace Podler.Models
         }
     }
 
+    [DataContract]
     public class Comic : ComicBase
     {
         [DataMember]

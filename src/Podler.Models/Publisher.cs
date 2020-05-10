@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Podler.Models
 {
     [DataContract]
-    public class Publisher : BaseModel, ISelectListItem
+    public class Publisher : BaseModel, ISelectableItem
     {
         [DataMember]
         [Required(ErrorMessage = "O nome da editora é obrigatório")]

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Podler.WebApi.Repositories
 {
-    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
+    public class CategoriesRepository : BaseRepository<Category>, ICategoriesRepository
     {
-        public CategoryRepository(ApplicationContext context) : base(context)
+        public CategoriesRepository(ApplicationContext context) : base(context)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Podler.WebApi.Repositories
         }
     }
 
-    public interface ICategoryRepository : IBaseRepository<Category>
+    public interface ICategoriesRepository : IBaseRepository<Category>
     {
         Task<Category> GetCategoryByNameAsync(string name);
     }

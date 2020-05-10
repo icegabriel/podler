@@ -26,9 +26,9 @@ namespace Podler.Views
         public async Task<IActionResult> AddComic()
         {
             var categories = await _podlerApiService.GetCategoriesAsync();
-            var designers = new List<Designer>();
+            var designers = await _podlerApiService.GetDesignersAsync();
             var publishers = new List<Publisher>();
-            var authors = new List<Author>();
+            var authors = await _podlerApiService.GetAuthorsAsync();
 
             var viewModel = new AddComicViewModel(categories, authors, designers, publishers);
 
@@ -44,14 +44,38 @@ namespace Podler.Views
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<AddCategoryResponse> AddCategory([FromBody] Category category)
+        public async Task<SelectAddResponse> AddCategory([FromBody] Category category)
         {
             if (!ModelState.IsValid)
             {
-                return new AddCategoryResponse(false, "Categoria invalida.");
+                return new SelectAddResponse(false, "Categoria invalida.");
             }
 
             return await _podlerApiService.AddCategory(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<SelectAddResponse> AddAuthor([FromBody] Author author)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new SelectAddResponse(false, "Autor invalido.");
+            }
+
+            return await _podlerApiService.AddAuthor(author);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<SelectAddResponse> AddDesigner([FromBody] Designer designer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new SelectAddResponse(false, "Desenhista invalido.");
+            }
+
+            return await _podlerApiService.AddDesigner(designer);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
