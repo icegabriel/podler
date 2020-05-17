@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home";
 }
+@model List<Category>;
 
 <div class="search input-group mb-3">
     <input type="text" class="search-input form-control" placeholder="Procurar" aria-describedby="button-addon2">
@@ -9,82 +10,19 @@
     </div>
 </div>
 
-<h2 class="category-title">Acao</h2>
-<div class="card-group">
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Title</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Title</h6>
-        </div>
-    </div>
-</div>
+@foreach (var category in Model)
+{
+    <h2 class="category-title">@category.Name</h2>
 
-<h2 class="category-title">Aventura</h2>
-<div class="card-group">
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
+    <div class="card-group">
+        <div class="card">
+            <img class="card-img-top w-100 d-block" src="~/images/capa-vazia.png" />
+            <div class="card-body">
+                <h6 class="card-title">asdfasdfasdfasdfasdfsadf</h6>
+            </div>
         </div>
     </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Boku no Hero Academia</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Title</h6>
-        </div>
-    </div>
-    <div class="card">
-        <img class="card-img-top w-100 d-block" src="https://unionleitor.top/assets/uploads/mangas/3a695b06.jpg" />
-        <div class="card-body">
-            <h6 class="card-title">Title</h6>
-        </div>
-    </div>
-</div>
+}
+
+
+

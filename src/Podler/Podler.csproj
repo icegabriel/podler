@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap-select\.github\FUNDING.yml" />
+    <None Include="wwwroot\lib\bootstrap-select\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\lib\bootstrap-select\.github\move.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
   </ItemGroup>
 

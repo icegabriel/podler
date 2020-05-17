@@ -31,7 +31,7 @@ namespace Podler.WebApi.Controllers
 
             if (publisherDb == null)
             {
-                return NotFound();
+                return NotFound("Editora não encontrada.");
             }
 
             return Ok(publisherDb);
@@ -42,14 +42,14 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             var publisherDb = await _publishersRepository.GetPublisherByNameAsync(publisher.Name);
 
             if (publisherDb != null)
             {
-                return Conflict();
+                return BadRequest("Já existe uma editora com esse nome.");
             }
 
             await _publishersRepository.IncludeAsync(publisher);
@@ -63,12 +63,12 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             await _publishersRepository.UpdateAsync(publisher);
 
-            return Ok();
+            return Ok("Editora adiconada com sucesso.");
         }
 
         [HttpDelete("{id}")]
@@ -78,7 +78,7 @@ namespace Podler.WebApi.Controllers
 
             if (publisher == null)
             {
-                return BadRequest();
+                return BadRequest("Editora não encontrada.");
             }
 
             await _publishersRepository.RemoveAsync(publisher);

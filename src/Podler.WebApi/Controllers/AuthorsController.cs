@@ -31,7 +31,7 @@ namespace Podler.WebApi.Controllers
 
             if (authorDb == null)
             {
-                return NotFound();
+                return NotFound("Autor não encontrado.");
             }
 
             return Ok(authorDb);
@@ -42,14 +42,14 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             var authorDb = await _authorsRepository.GetAuthorByNameAsync(author.Name);
 
             if (authorDb != null)
             {
-                return Conflict();
+                return BadRequest("Já existe um autor com esse nome.");
             }
 
             await _authorsRepository.IncludeAsync(author);
@@ -63,12 +63,12 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             await _authorsRepository.UpdateAsync(author);
 
-            return Ok();
+            return Ok("Autor alterado com sucesso.");
         }
 
         [HttpDelete("{id}")]
@@ -78,7 +78,7 @@ namespace Podler.WebApi.Controllers
 
             if (author == null)
             {
-                return BadRequest();
+                return BadRequest("Autor não encontrado.");
             }
 
             await _authorsRepository.RemoveAsync(author);

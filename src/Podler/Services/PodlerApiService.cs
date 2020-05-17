@@ -19,11 +19,13 @@ namespace Podler.Services
         private const string RELATIVE_AUTHORS_URI = "api/authors";
         private const string RELATIVE_DESIGNERS_URI = "api/designers";
         private const string RELATIVE_PUBLISHERS_URI = "api/publishers";
+        private const string RELATIVE_COMICS_URI = "api/comics";
 
         private readonly Uri _categoriesUri;
         private readonly Uri _authorsUri;
         private readonly Uri _designersUri;
         private readonly Uri _publishersUri;
+        private readonly Uri _comicsUri;
 
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
@@ -39,9 +41,10 @@ namespace Podler.Services
             _authorsUri = new Uri(baseUri, RELATIVE_AUTHORS_URI);
             _designersUri = new Uri(baseUri, RELATIVE_DESIGNERS_URI);
             _publishersUri = new Uri(baseUri, RELATIVE_PUBLISHERS_URI);
+            _comicsUri = new Uri(baseUri, RELATIVE_COMICS_URI);
         }
 
-        public async Task<List<T>> GetModelListAsync<T>(Uri uri) where T : BaseModel
+        private async Task<List<T>> GetAllModelsAsync<T>(Uri uri) where T : BaseModel
         {
             var httpResponseMessage = await _httpClient.GetAsync(uri);
 
@@ -56,7 +59,22 @@ namespace Podler.Services
             return null;
         }
 
-        public async Task<SelectAddResponse> PostSelectableItem<T>(T model, Uri uri, string successMessage, string existErrorMessage) where T : ISelectableItem
+        private async Task<T> GetModelAsync<T>(Uri uri) where T : BaseModel
+        {
+            var httpResponseMessage = await _httpClient.GetAsync(uri);
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var json = await httpResponseMessage.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<T>(json);
+
+                return model;
+            }
+
+            return null;
+        }
+
+        private async Task<SelectAddResponse> PostSelectableItem<T>(T model, Uri uri, string successMessage) where T : ISelectableItem
         {
             var json = JsonConvert.SerializeObject(model);
 
@@ -71,74 +89,98 @@ namespace Podler.Services
 
                 return new SelectAddResponse(true, successMessage, modelDb);
             }
-            if (httpResponseMessage.StatusCode == HttpStatusCode.Conflict)
-                return new SelectAddResponse(false, existErrorMessage);
             else
-                return new SelectAddResponse(false, "Error verifique os campos e tente novamente mais tarde.");
+                return new SelectAddResponse(false, await httpResponseMessage.Content.ReadAsStringAsync());
         }
 
-        public async Task<SelectAddResponse> AddCategory(Category category)
+        public async Task<AddComicResponse> PostComic(ComicUpload comic)
         {
-            return await PostSelectableItem(category,
-                                            _categoriesUri,
-                                            "Categoria adicionada com sucesso.",
-                                            "Essa categoria ja existe.");
+            var json = JsonConvert.SerializeObject(comic);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var httpResponseMessage = await _httpClient.PostAsync(_comicsUri, httpContent);
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+                return new AddComicResponse(true, "Quadrinho adicionado com sucesso.");
+
+            else
+                return new AddComicResponse(false, await httpResponseMessage.Content.ReadAsStringAsync());
         }
 
-        public async Task<SelectAddResponse> AddAuthor(Author author)
+
+        public async Task<SelectAddResponse> AddCategoryAsync(Category category) =>
+            await PostSelectableItem(category, _categoriesUri, "Categoria adicionada com sucesso.");
+
+        public async Task<SelectAddResponse> AddAuthorAsync(Author author) =>
+            await PostSelectableItem(author, _authorsUri, "Autor adicionado com sucesso.");
+
+        public async Task<SelectAddResponse> AddDesignerAsync(Designer designer) =>
+            await PostSelectableItem(designer, _designersUri, "Desenhista adicionado com sucesso.");
+
+        public async Task<SelectAddResponse> AddPublisherAsync(Publisher publisher) =>
+            await PostSelectableItem(publisher,_publishersUri, "Editora adicionada com sucesso.");
+
+
+        public async Task<List<Author>> GetAuthorsAsync() =>
+            await GetAllModelsAsync<Author>(_authorsUri);
+
+        public async Task<List<Category>> GetCategoriesAsync() =>
+            await GetAllModelsAsync<Category>(_categoriesUri);
+
+        public async Task<List<Designer>> GetDesignersAsync() =>
+            await GetAllModelsAsync<Designer>(_designersUri);
+
+        public async Task<List<Publisher>> GetPublishersAsync() =>
+            await GetAllModelsAsync<Publisher>(_publishersUri);
+
+
+        public async Task<Author> GetAuthorAsync(int id)
         {
-            return await PostSelectableItem(author,
-                                            _authorsUri,
-                                            "Autor adicionado com sucesso.",
-                                            "Esse author ja existe.");
+            var authorUri = new Uri(_authorsUri.ToString() + $"/{id}");
+
+            return await GetModelAsync<Author>(authorUri);
         }
 
-        public async Task<SelectAddResponse> AddDesigner(Designer designer)
+        public async Task<Category> GetCategoryAsync(int id)
         {
-            return await PostSelectableItem(designer,
-                                            _designersUri,
-                                            "Desenhista adicionado com sucesso.",
-                                            "Esse desenhista ja existe.");
+            var categoryUri = new Uri(_categoriesUri.ToString() + $"/{id}");
+
+            return await GetModelAsync<Category>(categoryUri);
         }
 
-        public async Task<SelectAddResponse> AddPublisher(Publisher publisher)
+        public async Task<Designer> GetDesignerAsync(int id)
         {
-            return await PostSelectableItem(publisher,
-                                            _publishersUri,
-                                            "Editora adicionada com sucesso.",
-                                            "Essa editora ja existe.");
+            var designerUri = new Uri(_designersUri.ToString() + $"/{id}");
+
+            return await GetModelAsync<Designer>(designerUri);
         }
 
-        public async Task<List<Author>> GetAuthorsAsync()
+        public async Task<Publisher> GetPublisherAsync(int id)
         {
-            return await GetModelListAsync<Author>(_authorsUri);
-        }
+            var publisherUri = new Uri(_publishersUri.ToString() + $"/{id}");
 
-        public async Task<List<Category>> GetCategoriesAsync()
-        {
-            return await GetModelListAsync<Category>(_categoriesUri);
-        }
-
-        public async Task<List<Designer>> GetDesignersAsync()
-        {
-            return await GetModelListAsync<Designer>(_designersUri);
-        }
-
-        public async Task<List<Publisher>> GetPublishersAsync()
-        {
-            return await GetModelListAsync<Publisher>(_publishersUri);
+            return await GetModelAsync<Publisher>(publisherUri);
         }
     }
 
     public interface IPodlerApiService
     {
-        Task<SelectAddResponse> AddAuthor(Author author);
-        Task<SelectAddResponse> AddCategory(Category category);
-        Task<SelectAddResponse> AddDesigner(Designer designer);
-        Task<SelectAddResponse> AddPublisher(Publisher publisher);
+        Task<SelectAddResponse> AddAuthorAsync(Author author);
+        Task<SelectAddResponse> AddCategoryAsync(Category category);
+        Task<SelectAddResponse> AddDesignerAsync(Designer designer);
+        Task<SelectAddResponse> AddPublisherAsync(Publisher publisher);
+
         Task<List<Category>> GetCategoriesAsync();
         Task<List<Author>> GetAuthorsAsync();
         Task<List<Designer>> GetDesignersAsync();
         Task<List<Publisher>> GetPublishersAsync();
+
+        Task<Author> GetAuthorAsync(int id);
+        Task<Category> GetCategoryAsync(int id);
+        Task<Designer> GetDesignerAsync(int id);
+        Task<Publisher> GetPublisherAsync(int id);
+
+        Task<AddComicResponse> PostComic(ComicUpload comic);
     }
 }

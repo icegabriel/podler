@@ -40,11 +40,16 @@ namespace Podler.Views
         public async Task<IActionResult> AddComic(AddComicViewModel addComicViewModel)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest();
-            }
 
-            return Ok();
+            addComicViewModel.SetComicUploadCover();
+
+            if (addComicViewModel.Comic.Cover.Length > 5242880)
+                return BadRequest();
+
+            var response = await _podlerApiService.PostComic(addComicViewModel.Comic);
+
+            return RedirectToAction("index", "home");
         }
 
         [HttpPost]
@@ -56,7 +61,7 @@ namespace Podler.Views
                 return new SelectAddResponse(false, "Categoria invalida.");
             }
 
-            return await _podlerApiService.AddCategory(category);
+            return await _podlerApiService.AddCategoryAsync(category);
         }
 
         [HttpPost]
@@ -68,7 +73,7 @@ namespace Podler.Views
                 return new SelectAddResponse(false, "Autor invalido.");
             }
 
-            return await _podlerApiService.AddAuthor(author);
+            return await _podlerApiService.AddAuthorAsync(author);
         }
 
         [HttpPost]
@@ -80,7 +85,7 @@ namespace Podler.Views
                 return new SelectAddResponse(false, "Desenhista invalido.");
             }
 
-            return await _podlerApiService.AddDesigner(designer);
+            return await _podlerApiService.AddDesignerAsync(designer);
         }
 
         [HttpPost]
@@ -92,7 +97,7 @@ namespace Podler.Views
                 return new SelectAddResponse(false, "Editora invalida.");
             }
 
-            return await _podlerApiService.AddPublisher(publisher);
+            return await _podlerApiService.AddPublisherAsync(publisher);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

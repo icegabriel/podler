@@ -3,7 +3,7 @@ using Podler.Models.Interfaces;
 
 namespace Podler.Responses
 {
-    public class SelectAddResponse
+    public class SelectAddResponse : IResponse
     {
         public bool IsSuccess { get; }
         public string Message { get; }

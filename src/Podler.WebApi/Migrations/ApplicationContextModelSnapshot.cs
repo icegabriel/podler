@@ -168,6 +168,7 @@ namespace Podler.WebApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<byte[]>("Image")
+                        .IsRequired()
                         .HasColumnType("BLOB");
 
                     b.HasKey("Id");
@@ -204,6 +205,7 @@ namespace Podler.WebApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<byte[]>("Image")
+                        .IsRequired()
                         .HasColumnType("BLOB");
 
                     b.HasKey("Id");
@@ -248,13 +250,13 @@ namespace Podler.WebApi.Migrations
             modelBuilder.Entity("Podler.Models.ComicAuthor", b =>
                 {
                     b.HasOne("Podler.Models.Author", "Author")
-                        .WithMany("ComicAuthors")
+                        .WithMany("Comics")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Podler.Models.Comic", "Comic")
-                        .WithMany("ComicAuthors")
+                        .WithMany("Authors")
                         .HasForeignKey("ComicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -263,13 +265,13 @@ namespace Podler.WebApi.Migrations
             modelBuilder.Entity("Podler.Models.ComicCategory", b =>
                 {
                     b.HasOne("Podler.Models.Category", "Category")
-                        .WithMany("ComicCategories")
+                        .WithMany("Comics")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Podler.Models.Comic", "Comic")
-                        .WithMany("ComicCategories")
+                        .WithMany("Categories")
                         .HasForeignKey("ComicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -278,13 +280,13 @@ namespace Podler.WebApi.Migrations
             modelBuilder.Entity("Podler.Models.ComicDesigner", b =>
                 {
                     b.HasOne("Podler.Models.Comic", "Comic")
-                        .WithMany("ComicDesigners")
+                        .WithMany("Designers")
                         .HasForeignKey("ComicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Podler.Models.Designer", "Designer")
-                        .WithMany("ComicDesigners")
+                        .WithMany("Comics")
                         .HasForeignKey("DesignerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -31,7 +31,7 @@ namespace Podler.WebApi.Controllers
 
             if (designer == null)
             {
-                return NotFound();
+                return NotFound("Desenhista não encontrado.");
             }
 
             return Ok(designer);
@@ -42,14 +42,14 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             var designerDb = await _designersRepository.GetDesignerByNameAsync(designer.Name);
 
             if (designerDb != null)
             {
-                return Conflict();
+                return BadRequest("Já existe um desenhista com esse nome.");
             }
 
             await _designersRepository.IncludeAsync(designer);
@@ -63,12 +63,12 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             await _designersRepository.UpdateAsync(designer);
 
-            return Ok();
+            return Ok("Desnhista adicionado com sucesso.");
         }
 
         [HttpDelete("{id}")]
@@ -78,7 +78,7 @@ namespace Podler.WebApi.Controllers
 
             if (designer == null)
             {
-                return BadRequest();
+                return BadRequest("Desenhista não encontrado.");
             }
 
             await _designersRepository.RemoveAsync(designer);

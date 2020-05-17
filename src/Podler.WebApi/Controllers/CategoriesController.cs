@@ -35,7 +35,7 @@ namespace Podler.WebApi.Controllers
 
             if (categoryDb == null)
             {
-                return NotFound();
+                return NotFound("Categoria não encontrada.");
             }
 
             return Ok(categoryDb);
@@ -46,14 +46,14 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             var categoryDb = await _categoryRepository.GetCategoryByNameAsync(category.Name);
 
             if (categoryDb != null)
             {
-                return Conflict();
+                return BadRequest("Já existe uma categoria com esse nome.");
             }
 
             await _categoryRepository.IncludeAsync(category);
@@ -67,12 +67,12 @@ namespace Podler.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Error verifique os campos e tente novamente mais tarde.");
             }
 
             await _categoryRepository.UpdateAsync(category);
 
-            return Ok();
+            return Ok("Categoria alterada com sucesso.");
         }
 
         [HttpDelete("{id}")]
@@ -82,7 +82,7 @@ namespace Podler.WebApi.Controllers
 
             if (category == null)
             {
-                return BadRequest();
+                return BadRequest("Categoria não encontrada.");
             }
 
             await _categoryRepository.RemoveAsync(category);

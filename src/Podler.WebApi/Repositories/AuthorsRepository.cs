@@ -13,7 +13,7 @@ namespace Podler.WebApi.Repositories
 
         public async Task<Author> GetAuthorByNameAsync(string name)
         {
-            return await DbSet.Where(c => c.Name.ToLower() == name.ToLower())
+            return await DbSet.Where(a => a.Name.ToLower() == name.ToLower())
                               .FirstOrDefaultAsync();
         }
     }

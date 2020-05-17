@@ -14,11 +14,11 @@ namespace Podler.Models
         public string Name { get; set; }
 
         [DataMember]
-        public List<ComicAuthor> ComicAuthors { get; set; }
+        public List<ComicAuthor> Comics { get; set; }
 
         public Author()
         {
-            ComicAuthors = new List<ComicAuthor>();
+            Comics = new List<ComicAuthor>();
         }
     }
 }

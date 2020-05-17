@@ -51,31 +51,31 @@ namespace Podler.WebApi
             modelBuilder.Entity<ComicCategory>().HasKey(cc => new { cc.ComicId, cc.CategoryId });
 
             modelBuilder.Entity<ComicCategory>().HasOne(cc => cc.Comic)
-                                                .WithMany(c => c.ComicCategories)
+                                                .WithMany(c => c.Categories)
                                                 .HasForeignKey(cc => cc.ComicId);
 
             modelBuilder.Entity<ComicCategory>().HasOne(cc => cc.Category)
-                                                .WithMany(cc => cc.ComicCategories)
+                                                .WithMany(cc => cc.Comics)
                                                 .HasForeignKey(cc => cc.CategoryId);
 
             modelBuilder.Entity<ComicAuthor>().HasKey(ca => new { ca.ComicId, ca.AuthorId });
 
             modelBuilder.Entity<ComicAuthor>().HasOne(ca => ca.Comic)
-                                                .WithMany(c => c.ComicAuthors)
+                                                .WithMany(c => c.Authors)
                                                 .HasForeignKey(cc => cc.ComicId);
 
             modelBuilder.Entity<ComicAuthor>().HasOne(ca => ca.Author)
-                                                .WithMany(ca => ca.ComicAuthors)
+                                                .WithMany(ca => ca.Comics)
                                                 .HasForeignKey(ca => ca.AuthorId);
 
             modelBuilder.Entity<ComicDesigner>().HasKey(cd => new { cd.ComicId, cd.DesignerId });
 
             modelBuilder.Entity<ComicDesigner>().HasOne(cd => cd.Comic)
-                                                .WithMany(c => c.ComicDesigners)
+                                                .WithMany(c => c.Designers)
                                                 .HasForeignKey(cd => cd.ComicId);
 
             modelBuilder.Entity<ComicDesigner>().HasOne(cd => cd.Designer)
-                                                .WithMany(cd => cd.ComicDesigners)
+                                                .WithMany(cd => cd.Comics)
                                                 .HasForeignKey(cd => cd.DesignerId);
 
             #endregion

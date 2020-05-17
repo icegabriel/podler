@@ -144,3 +144,9 @@ label {
     color: black;
     border-color: black !important;
 }
+
+.add-cover-image {
+    width: 114px;
+    height: 175px;
+    margin-bottom: 20px;
+}
