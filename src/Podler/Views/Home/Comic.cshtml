@@ -1,0 +1,95 @@
+﻿@model ComicApi;
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2 class="text-center page-title">@Model.Title</h2>
+
+<div class="container">
+
+    <div class="comic-information">
+        <div class="row justify-content-md-center">
+            <div class="col col-md-auto align-content-start">
+                <img class="cover-image" src="http://localhost:5001/api/comics/@(Model.Id)/cover" />
+            </div>
+            <div class="col">
+                <h4>Score: @(Model.Score)</h4>
+                <h4>Descrição:</h4>
+                <p>
+                    @Model.Description
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="comic-information" style="margin-top: 25px;">
+        <p>Rank: @Model.Rank</p>
+        <p>Data de Publicação: @Model.Date.Day/@Model.Date.Month/@Model.Date.Year</p>
+        <p>Numero De Capitulos: @Model.Chapters.Count()</p>
+        <p>Editora: @Model.Publisher.Name</p>
+        <p>
+            Categorias:
+            @foreach (var category in Model.Categories)
+            {
+                <a>@category.Category.Name </a>
+            }
+        </p>
+        <p>
+            Autores:
+            @foreach (var autor in Model.Authors)
+            {
+                <a>@autor.Author.Name </a>
+            }
+        </p>
+        <p>
+            Desenhistas:
+            @foreach (var designer in Model.Designers)
+            {
+                <a>@designer.Designer.Name </a>
+            }
+        </p>
+
+        @if (Model.Status == ComicStatus.OnGoing)
+        {
+            <p>Status: Em anadamento</p>
+        }
+        @if (Model.Status == ComicStatus.Finished)
+        {
+            <p>Status: Finalizado</p>
+        }
+        @if (Model.Status == ComicStatus.Canceled)
+        {
+            <p>Status: Cancelado</p>
+        }
+        @if (Model.Status == ComicStatus.Paused)
+        {
+            <p>Status: Pausado</p>
+        }
+    </div>
+
+    <div class="comic-information" style="margin-top: 25px;">
+        <div class="row justify-content-md-center">
+            <div class="col align-content-start">
+                <h2>Capítulos</h2>
+            </div>
+            <div class="col">
+                <div class="d-flex flex-row-reverse">
+                    <div class="p-2">
+                        <form asp-controller="admin" asp-action="addchapter" asp-route-comicid="@Model.Id">
+                            <button type="submit" class="btn btn-primary">Adicionar Capitulo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group">
+            @foreach (var chapter in Model.Chapters)
+            {
+                <a href="#" class="list-group-item list-group-item-action list-group-item-dark">
+                    @chapter.CapterNumber;
+                </a>
+            }
+        </div>
+    </div>
+</div>

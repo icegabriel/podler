@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Podler.Models;
+using Podler.Models.Extensions;
 using Podler.WebApi.Repositories;
 
 namespace Podler.WebApi.Controllers
@@ -21,7 +22,7 @@ namespace Podler.WebApi.Controllers
         {
             var designersDb = await _designersRepository.GetListAsync();
 
-            return Ok(designersDb);
+            return Ok(designersDb.ToListDesignerApi());
         }
 
         [HttpGet("{id}")]
@@ -34,7 +35,7 @@ namespace Podler.WebApi.Controllers
                 return NotFound("Desenhista não encontrado.");
             }
 
-            return Ok(designer);
+            return Ok(designer.ToDesignerApi());
         }
 
         [HttpPost]

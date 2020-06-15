@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Podler.Models;
+using Podler.Models.Extensions;
 using Podler.WebApi.Repositories;
 
 namespace Podler.WebApi.Controllers
@@ -25,7 +26,9 @@ namespace Podler.WebApi.Controllers
         {
             var categoriesDb = await _categoryRepository.GetListAsync();
 
-            return Ok(categoriesDb);
+            var categoriesApi = categoriesDb.ToListCategoryApi();
+
+            return Ok(categoriesApi);
         }
 
         [HttpGet("{id}")]
@@ -38,7 +41,7 @@ namespace Podler.WebApi.Controllers
                 return NotFound("Categoria não encontrada.");
             }
 
-            return Ok(categoryDb);
+            return Ok(categoryDb.ToCategoryApi());
         }
 
         [HttpPost]

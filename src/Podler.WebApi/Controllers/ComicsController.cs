@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Podler.Models;
+using Podler.Models.Extensions;
 using Podler.WebApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace Podler.WebApi.Controllers
         {
             var comicsDb = await _comicsRepository.GetListAsync();
 
-            return Ok(comicsDb);
+            return Ok(comicsDb.ToListComicApi());
         }
 
         [HttpGet("{id}")]
@@ -49,7 +50,7 @@ namespace Podler.WebApi.Controllers
                 return NotFound("Quadrinho não encontrado.");
             }
 
-            return Ok(comicDb);
+            return Ok(comicDb.ToComicApi());
         }
 
         [HttpPost]

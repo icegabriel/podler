@@ -1,0 +1,28 @@
+﻿@model ComicApi;
+@{
+    ViewData["Title"] = $"{Model.Title} - Adicionar Capítulo";
+}
+
+<h2 class="text-center page-title">Adicionar Capítulo</h2>
+
+<div class="form-group">
+    <label for="titulo">Título</label>
+    <input class="form-control" id="titulo" placeholder="Titulo">
+    <span class="text-danger"></span>
+</div>
+
+<div class="form-group" id="cover-upload">
+    <img class="add-cover-image" src="~/images/capa-vazia.png" />
+    <br />
+    <div class="custom-file">
+        <input asp-for="@Model.Cover" type="file" class="custom-file-input" id="cover-upload-input" onchange="imageCoverManager.fileValidation(this)">
+        <label id="cover-upload-label" class="custom-file-label" for="cover-upload-input">Selecione uma Imagem</label>
+    </div>
+    <span id="error-span-cover" asp-validation-for="@Model.Cover" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label for="numeroCaptulo">Numero do Capítulo</label>
+    <input type="text" class="form-control" id="numeroCaptulo" placeholder="Numero do Capítulo">
+    <span class="text-danger"></span>
+</div>

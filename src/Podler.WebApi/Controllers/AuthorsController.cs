@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Podler.Models;
+using Podler.Models.Extensions;
 using Podler.WebApi.Repositories;
 
 namespace Podler.WebApi.Controllers
@@ -21,7 +22,7 @@ namespace Podler.WebApi.Controllers
         {
             var authorsDb = await _authorsRepository.GetListAsync();
 
-            return Ok(authorsDb);
+            return Ok(authorsDb.ToListAuthorApi());
         }
 
         [HttpGet("{id}")]
@@ -34,7 +35,7 @@ namespace Podler.WebApi.Controllers
                 return NotFound("Autor não encontrado.");
             }
 
-            return Ok(authorDb);
+            return Ok(authorDb.ToAuthorApi());
         }
 
         [HttpPost]

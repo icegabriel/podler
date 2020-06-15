@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Podler.Models;
+using Podler.Models.Extensions;
 using Podler.WebApi.Repositories;
 
 namespace Podler.WebApi.Controllers
@@ -21,7 +22,7 @@ namespace Podler.WebApi.Controllers
         {
             var publisherDb = await _publishersRepository.GetListAsync();
 
-            return Ok(publisherDb);
+            return Ok(publisherDb.ToListPublisherApi());
         }
 
         [HttpGet("{id}")]
@@ -34,7 +35,7 @@ namespace Podler.WebApi.Controllers
                 return NotFound("Editora não encontrada.");
             }
 
-            return Ok(publisherDb);
+            return Ok(publisherDb.ToPublisherApi());
         }
 
         [HttpPost]

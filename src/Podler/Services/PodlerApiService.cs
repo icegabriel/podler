@@ -122,45 +122,52 @@ namespace Podler.Services
             await PostSelectableItem(publisher,_publishersUri, "Editora adicionada com sucesso.");
 
 
-        public async Task<List<Author>> GetAuthorsAsync() =>
-            await GetAllModelsAsync<Author>(_authorsUri);
+        public async Task<List<AuthorApi>> GetAuthorsAsync() =>
+            await GetAllModelsAsync<AuthorApi>(_authorsUri);
 
-        public async Task<List<Category>> GetCategoriesAsync() =>
-            await GetAllModelsAsync<Category>(_categoriesUri);
+        public async Task<List<CategoryApi>> GetCategoriesAsync() =>
+            await GetAllModelsAsync<CategoryApi>(_categoriesUri);
 
-        public async Task<List<Designer>> GetDesignersAsync() =>
-            await GetAllModelsAsync<Designer>(_designersUri);
+        public async Task<List<DesignerApi>> GetDesignersAsync() =>
+            await GetAllModelsAsync<DesignerApi>(_designersUri);
 
-        public async Task<List<Publisher>> GetPublishersAsync() =>
-            await GetAllModelsAsync<Publisher>(_publishersUri);
+        public async Task<List<PublisherApi>> GetPublishersAsync() =>
+            await GetAllModelsAsync<PublisherApi>(_publishersUri);
 
 
-        public async Task<Author> GetAuthorAsync(int id)
+        public async Task<AuthorApi> GetAuthorAsync(int id)
         {
             var authorUri = new Uri(_authorsUri.ToString() + $"/{id}");
 
-            return await GetModelAsync<Author>(authorUri);
+            return await GetModelAsync<AuthorApi>(authorUri);
         }
 
-        public async Task<Category> GetCategoryAsync(int id)
+        public async Task<CategoryApi> GetCategoryAsync(int id)
         {
             var categoryUri = new Uri(_categoriesUri.ToString() + $"/{id}");
 
-            return await GetModelAsync<Category>(categoryUri);
+            return await GetModelAsync<CategoryApi>(categoryUri);
         }
 
-        public async Task<Designer> GetDesignerAsync(int id)
+        public async Task<DesignerApi> GetDesignerAsync(int id)
         {
             var designerUri = new Uri(_designersUri.ToString() + $"/{id}");
 
-            return await GetModelAsync<Designer>(designerUri);
+            return await GetModelAsync<DesignerApi>(designerUri);
         }
 
-        public async Task<Publisher> GetPublisherAsync(int id)
+        public async Task<PublisherApi> GetPublisherAsync(int id)
         {
             var publisherUri = new Uri(_publishersUri.ToString() + $"/{id}");
 
-            return await GetModelAsync<Publisher>(publisherUri);
+            return await GetModelAsync<PublisherApi>(publisherUri);
+        }
+
+        public async Task<ComicApi> GetComicAsync(int id)
+        {
+            var comicUri = new Uri(_comicsUri.ToString() + $"/{id}");
+
+            return await GetModelAsync<ComicApi>(comicUri);
         }
     }
 
@@ -171,15 +178,16 @@ namespace Podler.Services
         Task<SelectAddResponse> AddDesignerAsync(Designer designer);
         Task<SelectAddResponse> AddPublisherAsync(Publisher publisher);
 
-        Task<List<Category>> GetCategoriesAsync();
-        Task<List<Author>> GetAuthorsAsync();
-        Task<List<Designer>> GetDesignersAsync();
-        Task<List<Publisher>> GetPublishersAsync();
+        Task<List<CategoryApi>> GetCategoriesAsync();
+        Task<List<AuthorApi>> GetAuthorsAsync();
+        Task<List<DesignerApi>> GetDesignersAsync();
+        Task<List<PublisherApi>> GetPublishersAsync();
 
-        Task<Author> GetAuthorAsync(int id);
-        Task<Category> GetCategoryAsync(int id);
-        Task<Designer> GetDesignerAsync(int id);
-        Task<Publisher> GetPublisherAsync(int id);
+        Task<ComicApi> GetComicAsync(int id);
+        Task<AuthorApi> GetAuthorAsync(int id);
+        Task<CategoryApi> GetCategoryAsync(int id);
+        Task<DesignerApi> GetDesignerAsync(int id);
+        Task<PublisherApi> GetPublisherAsync(int id);
 
         Task<AddComicResponse> PostComic(ComicUpload comic);
     }

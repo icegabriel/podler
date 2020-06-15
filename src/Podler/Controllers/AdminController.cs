@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,7 +15,8 @@ namespace Podler.Views
         private readonly ILogger<HomeController> _logger;
         private readonly IPodlerApiService _podlerApiService;
 
-        public AdminController(ILogger<HomeController> logger, IPodlerApiService podlerApiService)
+        public AdminController(ILogger<HomeController> logger,
+                               IPodlerApiService podlerApiService)
         {
             _logger = logger;
             _podlerApiService = podlerApiService;
@@ -98,6 +97,19 @@ namespace Podler.Views
             }
 
             return await _podlerApiService.AddPublisherAsync(publisher);
+        }
+
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddChapter(int comicid)
+        {
+            var comicDb = await _podlerApiService.GetComicAsync(comicid);
+
+            if (comicDb != null)
+            {
+                return View(comicDb);
+            }
+
+            return RedirectToAction("index", "home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

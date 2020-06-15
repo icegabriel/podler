@@ -23,10 +23,6 @@ namespace Podler.Models
         public DateTime Date { get; set; }
 
         [DataMember]
-        [Required(ErrorMessage = "A editora e obrigatória")]
-        public Publisher Publisher { get; set; }
-
-        [DataMember]
         [Required(ErrorMessage = "O status é obrigatório")]
         public ComicStatus Status { get; set; }
 

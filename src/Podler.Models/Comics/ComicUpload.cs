@@ -26,10 +26,5 @@ namespace Podler.Models
         [DataMember]
         [Required(ErrorMessage = "A editora e obrigatória")]
         public int SelectedPublisher { get; set; }
-
-        public ComicUpload()
-        {
-            Publisher = new Publisher() { Name = "Nenhuma" };
-        }
     }
 }

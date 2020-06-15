@@ -32,6 +32,9 @@ namespace Podler.Models
         public List<ComicAuthor> Authors { get; set; }
 
         [DataMember]
+        public Publisher Publisher { get; set; }
+
+        [DataMember]
         public List<Chapter> Chapters { get; set; }
 
         public Comic() : base()
@@ -40,6 +43,7 @@ namespace Podler.Models
             Categories = new List<ComicCategory>();
             Authors = new List<ComicAuthor>();
             Chapters = new List<Chapter>();
+            Publisher = new Publisher();
         }
 
         public Comic(ComicUpload comicUpload): this()

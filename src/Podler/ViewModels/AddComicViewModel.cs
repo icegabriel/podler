@@ -27,7 +27,10 @@ namespace Podler.ViewModels
             Comic = new ComicUpload();
         }
 
-        public AddComicViewModel(IEnumerable<Category> categories, IEnumerable<Author> authors, IEnumerable<Designer> designers, IEnumerable<Publisher> publishers) : this()
+        public AddComicViewModel(IEnumerable<CategoryApi> categories,
+                                 IEnumerable<AuthorApi> authors,
+                                 IEnumerable<DesignerApi> designers,
+                                 IEnumerable<PublisherApi> publishers) : this()
         {
             Categories = GetSelectListItem(categories);
             Authors = GetSelectListItem(authors);

@@ -150,3 +150,17 @@ label {
     height: 175px;
     margin-bottom: 20px;
 }
+
+.cover-image {
+    width: 185px !important;
+    height: 290px !important;
+}
+
+.comic-information {
+    padding: 25px;
+    background-color: #606060
+}
+
+p {
+    word-break: break-all
+}

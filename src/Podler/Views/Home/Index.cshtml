@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home";
 }
-@model List<Category>;
+@model HomeViewModel;
 
 <div class="search input-group mb-3">
     <input type="text" class="search-input form-control" placeholder="Procurar" aria-describedby="button-addon2">
@@ -10,17 +10,28 @@
     </div>
 </div>
 
-@foreach (var category in Model)
+@foreach (var category in Model.Categories)
 {
     <h2 class="category-title">@category.Name</h2>
 
     <div class="card-group">
-        <div class="card">
-            <img class="card-img-top w-100 d-block" src="~/images/capa-vazia.png" />
-            <div class="card-body">
-                <h6 class="card-title">asdfasdfasdfasdfasdfsadf</h6>
+
+        @foreach (var comic in category.Comics)
+        {
+            <div class="card">
+
+                @{
+                    var apiUri = new Uri(Model.BaseApiUri, comic.Cover);
+                }
+                <a asp-controller="home" asp-action="comic" asp-route-comicid="@comic.Id">
+                    <img class="card-img-top w-100 cover-image d-block" src="@apiUri.ToString()" />
+                    <div class="card-body">
+                        <h6 class="card-title">@comic.Title</h6>
+                    </div>
+                </a>
             </div>
-        </div>
+        }
+
     </div>
 }
 
